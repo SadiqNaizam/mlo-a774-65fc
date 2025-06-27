@@ -105,11 +105,15 @@ const products = [
 const Products = () => {
   console.log('Products page loaded');
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <LeftSidebar />
-      <div className="flex flex-col">
+    <div className="flex min-h-screen w-full bg-muted/40">
+      <LeftSidebar 
+        isCollapsed={isCollapsed} 
+        toggleSidebar={() => setIsCollapsed(prev => !prev)} 
+      />
+      <div className="flex flex-col flex-1 overflow-auto">
         <Header />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div className="flex items-center">
@@ -117,11 +121,13 @@ const Products = () => {
           </div>
           
           <Card>
-            <CardHeader>
-              <CardTitle>Product Catalog</CardTitle>
-              <CardDescription>
-                View, add, and manage your products.
-              </CardDescription>
+            <CardHeader className="flex-row items-center justify-between">
+              <div>
+                <CardTitle>Product Catalog</CardTitle>
+                <CardDescription>
+                  View, add, and manage your products.
+                </CardDescription>
+              </div>
               <div className="ml-auto flex items-center gap-2">
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
@@ -198,7 +204,7 @@ const Products = () => {
                       <TableCell className="font-medium">{product.name}</TableCell>
                       <TableCell>{product.sku}</TableCell>
                       <TableCell>
-                        <Badge variant={product.status === 'Out of Stock' ? 'destructive' : 'default'}>
+                        <Badge variant={product.status === 'Out of Stock' ? 'destructive' : product.status === 'Low Stock' ? 'secondary' : 'default'}>
                           {product.status}
                         </Badge>
                       </TableCell>
@@ -220,7 +226,7 @@ const Products = () => {
                         </DropdownMenu>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))}\
                 </TableBody>
               </Table>
             </CardContent>

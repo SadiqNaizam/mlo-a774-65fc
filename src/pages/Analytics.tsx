@@ -42,6 +42,7 @@ const customersData = [
 
 const Analytics = () => {
   console.log('Analytics page loaded');
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
@@ -49,12 +50,15 @@ const Analytics = () => {
   });
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <LeftSidebar />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 md:pl-20 lg:pl-64">
+    <div className="flex min-h-screen w-full bg-muted/40">
+      <LeftSidebar 
+        isCollapsed={isCollapsed} 
+        toggleSidebar={() => setIsCollapsed(prev => !prev)} 
+      />
+      <div className="flex flex-col flex-1 overflow-auto">
         <Header />
-        <main className="flex-1 p-4 sm:px-6 sm:py-0 md:gap-8 overflow-auto">
-          <div className="flex items-center justify-between mb-6">
+        <main className="flex-1 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <div className="flex items-center justify-between my-6">
             <h1 className="text-2xl font-bold">Analytics</h1>
             <div className="flex items-center gap-2">
                 <Popover>
@@ -149,7 +153,7 @@ const Analytics = () => {
                           <TableCell className="text-right">{product.sales}</TableCell>
                           <TableCell className="text-right">${product.revenue.toLocaleString()}</TableCell>
                         </TableRow>
-                      ))}
+                      ))}\
                     </TableBody>
                   </Table>
                 </CardContent>
@@ -179,7 +183,7 @@ const Analytics = () => {
                           <TableCell className="text-right">{customer.orders}</TableCell>
                           <TableCell className="text-right">${customer.totalSpent.toLocaleString()}</TableCell>
                         </TableRow>
-                      ))}
+                      ))}\
                     </TableBody>
                   </Table>
                 </CardContent>

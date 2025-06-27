@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   File,
   ListFilter,
@@ -77,6 +77,7 @@ const ordersData: Order[] = [
 
 const Orders = () => {
   console.log('Orders page loaded');
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const getBadgeVariant = (status: OrderStatus) => {
     switch (status) {
@@ -94,9 +95,12 @@ const Orders = () => {
   };
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <LeftSidebar />
-      <div className="flex flex-col">
+    <div className="flex min-h-screen w-full bg-muted/40">
+      <LeftSidebar 
+        isCollapsed={isCollapsed} 
+        toggleSidebar={() => setIsCollapsed(prev => !prev)} 
+      />
+      <div className="flex flex-col flex-1 overflow-auto">
         <Header />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <Tabs defaultValue="all">

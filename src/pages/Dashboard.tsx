@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DollarSign, ShoppingCart, Users, Activity } from 'lucide-react';
 
@@ -64,13 +64,17 @@ const recentOrders = [
 
 const Dashboard = () => {
   console.log('Dashboard page loaded');
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <LeftSidebar />
-      <div className="flex flex-col">
+    <div className="flex min-h-screen w-full bg-muted/40">
+      <LeftSidebar 
+        isCollapsed={isCollapsed} 
+        toggleSidebar={() => setIsCollapsed(prev => !prev)} 
+      />
+      <div className="flex flex-col flex-1 overflow-auto">
         <Header />
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted/40">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           {/* Stats Cards Section */}
           <section className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
             <StatsCard
